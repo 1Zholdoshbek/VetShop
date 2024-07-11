@@ -9,4 +9,5 @@ class Drug extends Model
 {
     use HasFactory;
 
+
 }
