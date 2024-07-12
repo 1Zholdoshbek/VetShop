@@ -1,15 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\adminControllers;
+namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Drug;
 use Illuminate\View\View;
 
-class AdminController extends Controller
+class IndexController extends Controller
 {
     public  function index():View
     {
-    return view('admin');
+        return view('admin.index');
     }
+
 }
