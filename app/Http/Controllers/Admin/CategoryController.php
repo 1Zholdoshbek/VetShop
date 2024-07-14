@@ -32,20 +32,31 @@ class CategoryController extends Controller
     }
 
 
-    public function show($id){
+    public function show(Category $category){
 
     }
-    public function edit($id)
+    public function edit(Category $category)
     {
+        return view('admin.category.edit',compact('category'));
+    }
+    public function update(Request $request,Category $category)
+    {
+        $data = $request->validate([
+            'name' => 'required|string|max:255',
+            'image' => 'nullable'
+        ]);
+        $category->update($data);
+        return redirect()
+            ->route('admin.category.index')
+            ->with('Success','Category Updated Successfully');
+
 
     }
-    public function update()
+    public function destroy(Category $category)
     {
-
-    }
-    public function destory()
-    {
-
+        $category->delete();
+        return redirect()->route('admin.category.index')
+            ->with('success', 'Post deleted successfully');
     }
 
 

@@ -3,12 +3,12 @@
     <div class="col-3">
     <a href="{{route('admin.category.create')}}" class="btn btn-block btn-outline-info btn-flat">Create</a>
     </div>
+
     <div class="row mt-4 mb-4">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title">Categories</h3>
-
                     <div class="card-tools">
                         <div class="input-group input-group-sm" style="width: 150px;">
                             <input type="text" name="table_search" class="form-control float-right" placeholder="Search">
@@ -40,8 +40,14 @@
                                 <td>{{$category->name}}</td>
                                 <td>{{$category->created_at}}</td>
                                 <td>{{$category->updated_at}}</td>
-
-                                <td><span class="tag tag-success">Approved</span></td>
+                                <td>
+                                    <a href="{{ route('admin.category.edit', $category->id) }}" class="btn btn-warning">Edit</a>
+                                    <form action="{{ route('admin.category.destroy', $category->id) }}" method="POST" style="display:inline-block;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button class="btn btn-danger" type="submit" onclick="return confirm('Are you sure?')">Delete</button>
+                                    </form>
+                                </td>
                             </tr>
                         @endforeach
                         </tbody>
