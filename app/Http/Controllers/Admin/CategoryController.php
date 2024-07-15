@@ -55,8 +55,9 @@ class CategoryController extends Controller
     public function destroy(Category $category)
     {
         $category->delete();
-        return redirect()->route('admin.category.index')
-            ->with('success', 'Post deleted successfully');
+        return redirect()
+            ->route('admin.category.index')
+            ->with('success', 'Category deleted successfully');
     }
 
 
