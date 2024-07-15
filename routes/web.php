@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\IndexController;
+use App\Http\Controllers\Admin\DrugController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -18,6 +19,15 @@ Route::group(['prefix'=>'admin'], function (){
         Route::patch('/{category}/update',[CategoryController::class,'update'])->name('admin.category.update');
         Route::delete('/{category}/destroy',[CategoryController::class,'destroy'])->name('admin.category.destroy');
     });
+    Route::group(['prefix'=>'drug'],function (){
+        Route::get('/',[DrugController::class,'index'])->name('admin.drug.index');
+        Route::get('/create',[DrugController::class,'create'])->name('admin.drug.create');
+        Route::post('/create',[DrugController::class,'store'])->name('admin.drug.store');
+        Route::get('/{drug}/edit',[DrugController::class,'edit'])->name('admin.drug.edit');
+        Route::patch('/{drug}/update',[DrugController::class,'update'])->name('admin.drug.update');
+        Route::delete('/{drug}/destroy',[DrugController::class,'destroy'])->name('admin.drug.destroy');
+    });
+
 });
 
 
