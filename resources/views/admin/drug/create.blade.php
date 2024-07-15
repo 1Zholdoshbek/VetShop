@@ -21,7 +21,7 @@
 
                 <div>
                     <label>Category</label>
-                    <select class="form-select" aria-label="Categories">
+                    <select class="form-select" aria-label="Categories" name="category_id">
                         <option selected>Open this select menu</option>
                         @foreach($categories as $category)
                             <option value="1">{{$category->name}}</option>
