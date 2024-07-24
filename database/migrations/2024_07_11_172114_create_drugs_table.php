@@ -29,7 +29,7 @@ return new class extends Migration
             $table->decimal('price', 10, 3);
             $table->integer('stock');
             $table->integer('discount')->nullable();
-            $table->text('code_2d')->nullable()->index();
+            $table->text('code_2d')->nullable();
             $table->timestamps();
             $table->softDeletes();
             $table->unsignedBigInteger('category_id')->index();

@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::group(['prefix'=>'admin'], function () {
+Route::group(['prefix'=>'admin', 'middleware' => \App\Http\Middleware\RoleMiddleWare::class], function () {
     Route::get('/', [IndexController::class, 'index']);
 
     Route::group(['prefix' => 'category'], function () {
