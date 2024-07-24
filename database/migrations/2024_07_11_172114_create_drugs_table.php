@@ -14,15 +14,26 @@ return new class extends Migration
         Schema::create('drugs', function (Blueprint $table) {
             $table->id();
             $table->string('name');
+            $table->string('name_ky')->nullable();
+            $table->string('name_en')->nullable();
+            $table->string('name_tr')->nullable();
             $table->string('image')->nullable();
-            $table->text('description');
-            $table->decimal('price', 10, 2);
+            $table->longText('description');
+            $table->longText('description_ky')->nullable();
+            $table->longText('description_en')->nullable();
+            $table->longText('description_tr')->nullable();
+            $table->text('short_description')->nullable();
+            $table->text('short_description_ky')->nullable();
+            $table->text('short_description_en')->nullable();
+            $table->text('short_description_tr')->nullable();
+            $table->decimal('price', 10, 3);
             $table->integer('stock');
+            $table->integer('discount')->nullable();
+            $table->text('code_2d')->nullable()->index();
             $table->timestamps();
-            $table->unsignedBigInteger('category_id')->nullable();
-            $table->index('category_id','drugs_category_id_index');
-
-
+            $table->softDeletes();
+            $table->unsignedBigInteger('category_id')->index();
+            $table->unsignedBigInteger('currency')->index();
         });
     }
 
