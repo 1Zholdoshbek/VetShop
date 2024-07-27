@@ -4,9 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Currency;
 use App\Models\Drug;
 use Illuminate\Http\Request;
-
+use App\Http\Requests\DrugRequest;
 
 class DrugController extends Controller
 {
@@ -21,18 +22,16 @@ class DrugController extends Controller
     public function create()
     {
         $categories = Category::all();
-        return view('admin.drug.create',compact('categories'));
+        $currencies = Currency::all();
+        return view('admin.drug.create',compact('categories','currencies'));
     }
-    public function store(Request $request)
+    public function store(DrugRequest $request)
     {
-        $data = $request->validate([
-            'name'=>'required|string|max:255',
-            'image'=>'nullable',
-            'description'=>'required',
-            'price'=>'required',
-            'stock'=>'required',
-            'category_id'=>'required'
-        ]);
+        $data = $request->validated();
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images/drugs', 'public');
+            $data['image'] = $imagePath;
+        }
         Drug::create($data);
         return redirect()->route('admin.drug.index');
 
@@ -41,20 +40,19 @@ class DrugController extends Controller
 
     }
 
-    public function edit(Drug $drug)
+    public function edit(Drug $drug,Request $request)
     {
-        return view('admin.drug.edit', compact('drug'));
+        $categories = Category::all();
+        $currencies = Currency::all();
+        return view('admin.drug.edit', compact('drug','categories','currencies'));
     }
-    public function update (Drug $drug)
+    public function update (DrugRequest $request,Drug $drug)
     {
-        $data = request()->validate([
-            'name'=>'required|string|max:255',
-            'image'=>'nullable',
-            'description'=>'required',
-            'price'=>'required',
-            'stock'=>'required',
-            'category_id'=>'required'
-        ]);
+        $data = request()->validated();
+        if ($request->hasFile('image')) {
+            $imagePath = $request->file('image')->store('images/drugs', 'public');
+            $data['image'] = $imagePath;
+        }
         $drug->update($data);
         return redirect()
             ->route('admin.drug.index')

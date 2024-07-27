@@ -32,6 +32,7 @@
                             <td>Price</td>
                             <td>Stock</td>
                             <td>Category</td>
+                            <td>Currency</td>
                             <th>Created at</th>
                             <th>Updated at</th>
                             <th>Actions</th>
@@ -46,6 +47,7 @@
                                 <td>{{$drug->price}}</td>
                                 <td>{{$drug->stock}}</td>
                                 <td>{{$drug->category->name}}</td>
+                                <td>{{$drug->currency->code}}</td>
                                 <td>{{$drug->created_at}}</td>
                                 <td>{{$drug->updated_at}}</td>
                                 <td>
