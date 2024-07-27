@@ -1,7 +1,7 @@
 @extends("layouts.admin_main")
 @section("content")
 
-    <form action="{{route('admin.drug.update',$drug->id)}}" method="POST" xmlns="http://www.w3.org/1999/html">
+    <form action="{{route('admin.drug.update',$drug->id)}}"  enctype="multipart/form-data" method="POST" xmlns="http://www.w3.org/1999/html">
         @csrf
         @method('PATCH')
         <div class="card card-success">
@@ -23,7 +23,7 @@
 
                <div>
                    <label>Image</label>
-                   <input class="form-control" type="text" name="image" placeholder="" value="{{$drug->image}}">
+                   <input class="form-control" type="file" name="image" placeholder="" value="{{$drug->image}}">
 
                </div>
 
@@ -43,6 +43,15 @@
                     <label>Stock</label>
                     <input class="form-control" type="number" name="stock" placeholder="" value="{{$drug->stock}}">
 
+                </div>
+                <div>
+                    <label>Currency</label>
+                    <select class="form-select" aria-label="Currencies" name="currency_id">
+                        <option selected>Open this select menu</option>
+                        @foreach($currencies as $currency)
+                            <option value="{{ $currency->id }}">{{ $currency->code }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
             </div>

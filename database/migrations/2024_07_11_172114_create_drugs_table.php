@@ -33,7 +33,7 @@ return new class extends Migration
             $table->timestamps();
             $table->softDeletes();
             $table->unsignedBigInteger('category_id')->index();
-            $table->unsignedBigInteger('currency')->index();
+            $table->unsignedBigInteger('currency_id')->index();
         });
     }
 
