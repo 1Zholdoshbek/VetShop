@@ -1,7 +1,7 @@
 @extends("layouts.admin_main")
 @section("content")
 
-    <form action="{{route('admin.drug.store')}}" method="POST">
+    <form action="{{ route('admin.drug.store') }}" method="POST" enctype="multipart/form-data">
         @csrf
         <div class="card card-success">
             <div class="card-header">
@@ -16,7 +16,7 @@
 
                 <div>
                     <label>Image</label>
-                    <input class="form-control" type="text" name="image" placeholder="image">
+                    <input class="form-control" type="file" name="image" placeholder="image">
                 </div>
 
                 <div>
@@ -24,16 +24,15 @@
                     <select class="form-select" aria-label="Categories" name="category_id">
                         <option selected>Open this select menu</option>
                         @foreach($categories as $category)
-                            <option value="1">{{$category->name}}</option>
+                            <option value="{{ $category->id }}">{{ $category->name }}</option>
                         @endforeach
                     </select>
                 </div>
 
                 <div>
-                    <label for="">Description</label>
+                    <label>Description</label>
                     <input class="form-control" type="text" name="description" placeholder="description">
                 </div>
-
 
                 <div>
                     <label>Price</label>
@@ -41,17 +40,26 @@
                 </div>
 
                 <div>
-                    <label for="">Stock</label>
+                    <label>Stock</label>
                     <input class="form-control" type="number" name="stock" placeholder="stock">
                 </div>
 
+                <div>
+                    <label>Currency</label>
+                    <select class="form-select" aria-label="Currencies" name="currency_id">
+                        <option selected>Open this select menu</option>
+                        @foreach($currencies as $currency)
+                            <option value="{{ $currency->id }}">{{ $currency->code }}</option>
+                        @endforeach
+                    </select>
+                </div>
 
             </div>
             <!-- /.card-body -->
 
         </div>
         <div class="d-flex justify-content-end">
-            <button type="submit" class = "btn btn-success col-2 ">Submit</button>
+            <button type="submit" class="btn btn-success col-2">Submit</button>
         </div>
     </form>
 @endsection
