@@ -7,7 +7,7 @@ use App\Models\Category;
 use App\Models\Currency;
 use App\Models\Drug;
 use Illuminate\Http\Request;
-
+use App\Http\Requests\DrugRequest;
 
 class DrugController extends Controller
 {
@@ -25,17 +25,9 @@ class DrugController extends Controller
         $currencies = Currency::all();
         return view('admin.drug.create',compact('categories','currencies'));
     }
-    public function store(Request $request)
+    public function store(DrugRequest $request)
     {
-        $data = $request->validate([
-            'name'=>'required|string|max:255',
-            'image'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'description'=>'required',
-            'price'=>'required',
-            'stock'=>'required',
-            'category_id' => 'required|exists:categories,id',
-            'currency_id' => 'required|exists:currencies,id'
-        ]);
+        $data = $request->validated();
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('images/drugs', 'public');
             $data['image'] = $imagePath;
@@ -54,17 +46,9 @@ class DrugController extends Controller
         $currencies = Currency::all();
         return view('admin.drug.edit', compact('drug','categories','currencies'));
     }
-    public function update (Drug $drug, Request $request)
+    public function update (DrugRequest $request,Drug $drug)
     {
-        $data = request()->validate([
-            'name'=>'required|string|max:255',
-            'image'=>'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
-            'description'=>'required',
-            'price'=>'required',
-            'stock'=>'required',
-            'category_id' => 'required|exists:categories,id',
-            'currency_id' => 'required|exists:currencies,id'
-        ]);
+        $data = request()->validated();
         if ($request->hasFile('image')) {
             $imagePath = $request->file('image')->store('images/drugs', 'public');
             $data['image'] = $imagePath;
