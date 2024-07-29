@@ -36,7 +36,9 @@ class DrugController extends Controller
         return redirect()->route('admin.drug.index');
 
     }
-    public function show(){
+    public function show($id){
+        $drug = Drug::findOrFail($id);
+        return view('admin.drug.show', compact('drug'));
 
     }
 

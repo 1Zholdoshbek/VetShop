@@ -51,6 +51,7 @@
                                 <td>{{$drug->created_at}}</td>
                                 <td>{{$drug->updated_at}}</td>
                                 <td>
+                                    <a href="{{route('admin.drug.show',$drug->id)}}" class="btn btn-warning">Show</a>
                                     <a href="{{ route('admin.drug.edit', $drug->id) }}" class="btn btn-warning">Edit</a>
                                     <form action="{{ route('admin.drug.destroy', $drug->id) }}" method="POST" style="display:inline-block;">
                                         @csrf
