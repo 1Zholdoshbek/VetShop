@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Currency;
 use App\Models\Drug;
+use App\Models\DrugGallery;
 use Illuminate\Http\Request;
 use App\Http\Requests\DrugRequest;
 
@@ -37,7 +38,8 @@ class DrugController extends Controller
 
     }
     public function show($id){
-        $drug = Drug::findOrFail($id);
+        //$drug = Drug::findOrFail($id);
+        $drug = Drug::with('gallery')->findOrFail($id);
         return view('admin.drug.show', compact('drug'));
 
     }
@@ -69,5 +71,32 @@ class DrugController extends Controller
             ->with('success', 'Drug deleted successfully');
 
     }
+    public function addImage(Request $request, $id)
+    {
+        $drug = Drug::findOrFail($id);
+
+        if ($request->hasFile('image')) {
+            $filePath = $request->file('image')->store('drug_images', 'public');
+            $fileType = $request->file('image')->getMimeType();
+            $fileSize = $request->file('image')->getSize();
+
+            $drug->gallery()->create([
+                'file_path' => $filePath,
+                'type' => $fileType,
+                'size' => $fileSize,
+            ]);
+        }
+
+        return redirect()->route('admin.drug.show', $drug->id);
+    }
+
+    public function deleteImage($drugId, $imageId)
+    {
+        $image = DrugGallery::where('drug_id', $drugId)->findOrFail($imageId);
+        $image->delete();
+
+        return redirect()->route('admin.drug.show', $drugId);
+    }
+
     //
 }
