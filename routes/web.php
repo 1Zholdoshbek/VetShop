@@ -23,10 +23,14 @@ Route::group(['prefix'=>'admin', 'middleware' => \App\Http\Middleware\RoleMiddle
     Route::group(['prefix' => 'drug'], function () {
         Route::get('/', [DrugController::class, 'index'])->name('admin.drug.index');
         Route::get('/create', [DrugController::class, 'create'])->name('admin.drug.create');
+        Route::get('{drug}',[DrugController::class,'show'])->name('admin.drug.show');
         Route::post('/create', [DrugController::class, 'store'])->name('admin.drug.store');
         Route::get('/{drug}/edit', [DrugController::class, 'edit'])->name('admin.drug.edit');
         Route::patch('/{drug}/update', [DrugController::class, 'update'])->name('admin.drug.update');
         Route::delete('/{drug}/destroy', [DrugController::class, 'destroy'])->name('admin.drug.destroy');
+
+        Route::post('{id}/add-image', [DrugController::class, 'addImage'])->name('admin.drug.addImage');
+        Route::delete('{id}/delete-image/{imageId}', [DrugController::class, 'deleteImage'])->name('admin.drug.deleteImage');
     });
 
 

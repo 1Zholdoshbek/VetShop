@@ -23,4 +23,8 @@ public function currency()
   return $this->belongsTo(Currency::class);
 }
 
+public function gallery()
+    {
+        return $this->hasMany(DrugGallery::class);
+    }
 }
