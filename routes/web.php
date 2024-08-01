@@ -28,6 +28,9 @@ Route::group(['prefix'=>'admin', 'middleware' => \App\Http\Middleware\RoleMiddle
         Route::get('/{drug}/edit', [DrugController::class, 'edit'])->name('admin.drug.edit');
         Route::patch('/{drug}/update', [DrugController::class, 'update'])->name('admin.drug.update');
         Route::delete('/{drug}/destroy', [DrugController::class, 'destroy'])->name('admin.drug.destroy');
+
+        Route::post('{id}/add-image', [DrugController::class, 'addImage'])->name('admin.drug.addImage');
+        Route::delete('{id}/delete-image/{imageId}', [DrugController::class, 'deleteImage'])->name('admin.drug.deleteImage');
     });
 
 
