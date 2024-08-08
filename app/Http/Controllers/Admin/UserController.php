@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\UserGallery;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -14,8 +15,8 @@ class UserController extends Controller
         $users = User::all();
         return view('admin.user.index',compact('users'));
     }
-    public function show(){
-
+    public function show(User $user){
+        return view('admin.user.show',compact('user'));
     }
 
     public function create(){
@@ -57,5 +58,27 @@ class UserController extends Controller
         return redirect()
             ->route('admin.user.index')
             ->with('success','User deleted successfully');
+    }
+    public function uploadFile(Request $request, User $user)
+    {
+        $data = $request->validate([
+            'file' => 'required|file|mimes:jpg,jpeg,png,gif'
+        ]);
+
+        $path = $request->file('file')->store('user_galleries', 'public');
+        $user->gallery()->create([
+            'file_path' => $path,
+            'type' => $request->file('file')->getClientOriginalExtension(),
+            'size' => $request->file('file')->getSize(),
+        ]);
+
+        return redirect()->route('admin.user.show', $user->id)->with('success', 'File uploaded successfully');
+    }
+
+    public function deleteFile(User $user, UserGallery $gallery)
+    {
+        Storage::disk('public')->delete($gallery->file_path);
+        $gallery->delete();
+        return redirect()->route('admin.user.show', $user->id)->with('success', 'File deleted successfully');
     }
 }
