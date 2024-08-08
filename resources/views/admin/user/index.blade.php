@@ -43,6 +43,7 @@
                                 <td>{{$user->created_at}}</td>
                                 <td>{{$user->updated_at}}</td>
                                 <td>
+                                    <a href="{{route('admin.user.show',$user->id)}}" class="btn btn-warning">Show</a>
                                     <a href="{{ route('admin.user.edit', $user->id) }}" class="btn btn-warning">Edit</a>
                                     <form action="{{ route('admin.user.destroy', $user->id) }}" method="POST" style="display:inline-block;">
                                         @csrf
