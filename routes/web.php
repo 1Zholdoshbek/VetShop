@@ -3,6 +3,7 @@
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\IndexController;
 use App\Http\Controllers\Admin\DrugController;
+use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -45,6 +46,12 @@ Route::group(['prefix'=>'admin', 'middleware' => \App\Http\Middleware\RoleMiddle
 
         Route::post('user/{user}/upload', [UserController::class, 'uploadFile'])->name('admin.user.uploadFile');
         Route::delete('user/{user}/gallery/{gallery}', [UserController::class, 'deleteFile'])->name('admin.user.deleteFile');
+    });
+
+    Route::group(['prefix'=>'service'],function () {
+        Route::get('/', [ServiceController::class, 'index'])->name('admin.service.index');
+
+
     });
 
 

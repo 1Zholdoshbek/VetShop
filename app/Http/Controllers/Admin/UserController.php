@@ -15,8 +15,7 @@ class UserController extends Controller
         $users = User::all();
         return view('admin.user.index',compact('users'));
     }
-    public function show(User $user){
-        $gallery = UserGallery::where('user_id',$user->id)->get();
+    public function show(User $user, UserGallery $gallery){
         return view('admin.user.show',compact('user','gallery'));
     }
 

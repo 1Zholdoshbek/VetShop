@@ -28,7 +28,7 @@
         </form>
 
         <div class="gallery mt-4">
-            @foreach($gallery as $file)
+            @foreach($user->gallery as $file)
                 <div class="card mb-4" style="width: 18rem;">
                     <img src="{{ asset('storage/' . $file->file_path) }}" class="card-img-top" alt="...">
                     <div class="card-body">
